@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.bluesleeword.ml/"/>
-  <updated>2020-01-28T05:53:47.100Z</updated>
+  <updated>2020-01-28T06:00:26.012Z</updated>
   <id>https://www.bluesleeword.ml/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E5%B9%B2%E8%B4%A7%E9%93%BE/"/>
     <id>https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E5%B9%B2%E8%B4%A7%E9%93%BE/</id>
     <published>2020-01-28T05:36:03.000Z</published>
-    <updated>2020-01-28T05:53:47.100Z</updated>
+    <updated>2020-01-28T06:00:26.012Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="汇总一些关于前端页面性能优化的帖子"><a href="#汇总一些关于前端页面性能优化的帖子" class="headerlink" title="汇总一些关于前端页面性能优化的帖子"></a>汇总一些关于前端页面性能优化的帖子</h1><ol><li>性能预算（Performance budgets）【里面有推荐建议针对优化的各方面】</li></ol><p><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn</a></em></strong></p><hr><ol start="2"><li>优化图片Optimize Images</li></ol><p><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn</a></em></strong></p><hr><ol start="3"><li>资源优先级 – 让浏览器助您一臂之力</li></ol><p><strong><em><a href="https://developers.google.com/web/fundamentals/performance/resource-prioritization" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/resource-prioritization</a></em></strong></p><hr><ol start="4"><li>IntersectionObserver 延迟加载图像和其他媒体</li></ol><p><strong><em><a href="https://developers.google.com/web/updates/2016/04/intersectionobserver" target="_blank" rel="noopener">https://developers.google.com/web/updates/2016/04/intersectionobserver</a></em></strong></p><hr><ol start="5"><li>loadCSS</li></ol><p><strong><em><a href="https://github.com/filamentgroup/loadCSS" target="_blank" rel="noopener">https://github.com/filamentgroup/loadCSS</a></em></strong></p><hr><ol start="6"><li>阻塞渲染的 CSS</li></ol><p><strong><em><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css</a></em></strong></p>]]></content>
+    <content type="html"><![CDATA[<h1 id="汇总一些关于前端页面性能优化的帖子"><a href="#汇总一些关于前端页面性能优化的帖子" class="headerlink" title="汇总一些关于前端页面性能优化的帖子"></a>汇总一些关于前端页面性能优化的帖子</h1><blockquote><ol><li>性能预算（Performance budgets）【里面有推荐建议针对优化的各方面】<br><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn</a></em></strong></li></ol></blockquote><blockquote><ol start="2"><li>优化图片Optimize Images<br><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn</a></em></strong></li></ol></blockquote><blockquote><ol start="3"><li>资源优先级 – 让浏览器助您一臂之力<br><strong><em><a href="https://developers.google.com/web/fundamentals/performance/resource-prioritization" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/resource-prioritization</a></em></strong></li></ol></blockquote><blockquote><ol start="4"><li>IntersectionObserver 延迟加载图像和其他媒体<br><strong><em><a href="https://developers.google.com/web/updates/2016/04/intersectionobserver" target="_blank" rel="noopener">https://developers.google.com/web/updates/2016/04/intersectionobserver</a></em></strong></li></ol></blockquote><blockquote><ol start="5"><li>loadCSS<br><strong><em><a href="https://github.com/filamentgroup/loadCSS" target="_blank" rel="noopener">https://github.com/filamentgroup/loadCSS</a></em></strong></li></ol></blockquote><blockquote><ol start="6"><li>阻塞渲染的 CSS<br><strong><em><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css</a></em></strong></li></ol></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;汇总一些关于前端页面性能优化的帖子&quot;&gt;&lt;a href=&quot;#汇总一些关于前端页面性能优化的帖子&quot; class=&quot;headerlink&quot; title=&quot;汇总一些关于前端页面性能优化的帖子&quot;&gt;&lt;/a&gt;汇总一些关于前端页面性能优化的帖子&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;性能预算
+        &lt;h1 id=&quot;汇总一些关于前端页面性能优化的帖子&quot;&gt;&lt;a href=&quot;#汇总一些关于前端页面性能优化的帖子&quot; class=&quot;headerlink&quot; title=&quot;汇总一些关于前端页面性能优化的帖子&quot;&gt;&lt;/a&gt;汇总一些关于前端页面性能优化的帖子&lt;/h1&gt;&lt;blockquote&gt;
+
       
     
     </summary>
