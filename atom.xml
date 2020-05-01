@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.bluesleeword.ml/"/>
-  <updated>2020-01-28T06:00:26.012Z</updated>
+  <updated>2020-05-01T15:52:48.350Z</updated>
   <id>https://www.bluesleeword.ml/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Window10 调试 safari 方法</title>
+    <link href="https://www.bluesleeword.ml/2020/05/02/Window10-%E8%B0%83%E8%AF%95-safari-%E6%96%B9%E6%B3%95/"/>
+    <id>https://www.bluesleeword.ml/2020/05/02/Window10-%E8%B0%83%E8%AF%95-safari-%E6%96%B9%E6%B3%95/</id>
+    <published>2020-05-01T15:50:07.000Z</published>
+    <updated>2020-05-01T15:52:48.350Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>说明：在移动端页面开发中，需要处理 Android 和 iOS 的兼容性问题。在 Chrome DevTools 中选择手机模式，可以一定程度上模拟移动端的页面，但更多的只是方便进行页面布局的调试和兼容。一些移动端的特性与表现，在真机和模拟情况下还是有存在很大差别的（比如软键盘的弹出等），尤其是 iOS 出于某些“考虑”表现出不符合标准的 BUG，在 Windows Chrome 中更是难以定位。</p></blockquote><p>本文介绍如何在 Windows 系统中连接 iPhone Web 页面进行真机调试。</p><p>💡 参考视频：<a href="https://www.youtube.com/watch?v=A9vA_R3w6eE" target="_blank" rel="noopener">视频</a></p><h3 id="工具资料"><a href="#工具资料" class="headerlink" title="工具资料"></a>工具资料</h3><ol><li>iPhone/iPad + 数据线</li><li>iTunes</li><li>Node.js 环境</li><li>remotedebug-ios-webkit-adapter</li><li>Chrome 浏览器（勿使用过低版本 Chrome）</li><li>梯子（可能需要）</li></ol><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>实现真机调试主要是使用了 remotedebug-ios-webkit-adapter 这一工具，使用方法在其 <a href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter" target="_blank" rel="noopener">gitHub 主页</a> 上有介绍，可以直接按照其官方说明安装使用。本文对其 Windows 下的安装使用进行了一些细节的补充和说明。</p><h3 id="安装-scoope"><a href="#安装-scoope" class="headerlink" title="安装 scoope"></a>安装 scoope</h3><p><a href="https://scoop.sh/?target=_blank">scoope</a> 是一个 Windows 命令行安装工具，类似 linux 下的 yum 或 <code>apt-get</code>。<code>remotedebug-ios-webkit-adapter</code> 的安装将使用该工具。</p><p>使用 <a href="https://docs.microsoft.com/zh-cn/powershell/" target="_blank" rel="noopener">powershell</a>（powershell 是 Windows 预装的 Shell 工具）依次执行一下命令， 安装 scoope:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 使用Powershell进行安装</span><br><span class="line">iex (new-object net.webclient).downloadstring(&apos;https://get.scoop.sh&apos;)</span><br><span class="line"># 如果安装失败，请执行以下命令再重新安装</span><br><span class="line">Set-ExecutionPolicy RemoteSigned -scope CurrentUser</span><br></pre></td></tr></table></figure><p>稍等片刻就安装成功了。如果安装失败，请尝试使用管理员权限执行。</p><h3 id="安装-ios-webkit-debug-proxy"><a href="#安装-ios-webkit-debug-proxy" class="headerlink" title="安装 ios-webkit-debug-proxy"></a>安装 ios-webkit-debug-proxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">scoop bucket add extras</span><br><span class="line">scoop install ios-webkit-debug-proxy</span><br></pre></td></tr></table></figure><h3 id="安装-remotedebug-ios-webkit-adapter"><a href="#安装-remotedebug-ios-webkit-adapter" class="headerlink" title="安装 remotedebug-ios-webkit-adapter"></a>安装 remotedebug-ios-webkit-adapter</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">npm install remotedebug-ios-webkit-adapter -g</span><br></pre></td></tr></table></figure><p>安装成功后，你将能在命令行中使用 <code>remotedebug_ios_webkit_adapter</code> 命令</p><h3 id="安装-iTunes"><a href="#安装-iTunes" class="headerlink" title="安装 iTunes"></a>安装 iTunes</h3><p><a href="https://www.apple.com/itunes/download/" target="_blank" rel="noopener">访问 iTunes 官网</a>，下载 iTunes。这里注意 iTunes for Windows 提供两个版本，一个是从 Windows Store 下载，另一个是安装包。选择后者下载安装。</p><h3 id="连接调试"><a href="#连接调试" class="headerlink" title="连接调试"></a>连接调试</h3><ol><li>进入 iPhonse 中的 _设置 &gt; Safari 浏览器 &gt; 高级 &gt; Web 检查器_，开启该选项。</li><li>打开 iTunes 并连接 iPhone，在 iPhone 弹框中选择信任该电脑。</li><li>打开命令行，执行以下命令，启动适配器：</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">remotedebug_ios_webkit_adapter --port=9000</span><br></pre></td></tr></table></figure><ol start="4"><li>在 iPhone 中打开 Safari 浏览器，打开待调试页面。</li><li>打开 Chrome 浏览器，进入 <strong>chrome://inspect/#devices</strong> 页面，在 <code>Discover network targets</code> 选项添加 <code>localhost:9000</code> 配置。刷新页面，这时页面中会出现 <code>Remote Target</code> 列表，该列表展示了 iPhone 中打开的页面，点击 <code>inspect</code>，即可进行调试。</li></ol><p><strong>注意</strong>：如果第 5 步中未出现待调试页面，请重启 remotedebug_ios_webkit_adapter 工具，然后刷新或重启浏览器重试。</p><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol><li>在首次点击 inspect 打开真机调试工具时可能需要科学上网，否则可能出现 404 错误。</li><li>命令行执行失败时，请尝试使用管理员权限，或查看其官网说明。</li><li>请勿使用较低版本的 Chrome 浏览器</li><li>该例中使用了 Windows 10、Chrome 73.0.3683.75、iOS 12.1.4。</li><li>其他系统下的安装和使用请查看 <a href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter" target="_blank" rel="noopener">remotedebug-ios-webkit-adapter gitHub 主页</a>。</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;说明：在移动端页面开发中，需要处理 Android 和 iOS 的兼容性问题。在 Chrome DevTools 中选择手机模式，可以一定程度上模拟移动端的页面，但更多的只是方便进行页面布局的调试和兼容。一些移动端的特性与表现，在真机和模拟情况下还
+      
+    
+    </summary>
+    
+    
+      <category term="Development skills" scheme="https://www.bluesleeword.ml/categories/Development-skills/"/>
+    
+    
+      <category term="前端调试页面技巧" scheme="https://www.bluesleeword.ml/tags/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%A1%B5%E9%9D%A2%E6%8A%80%E5%B7%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>前端性能优化推荐</title>
+    <link href="https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A8%E8%8D%90/"/>
+    <id>https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A8%E8%8D%90/</id>
+    <published>2020-01-28T08:54:20.000Z</published>
+    <updated>2020-01-28T15:25:18.117Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="优化建议"><a href="#优化建议" class="headerlink" title="优化建议"></a>优化建议</h1><ul><li><h3 id="document"><a href="#document" class="headerlink" title="document"></a><code>document</code></h3><blockquote><p>使用过多的DOM大小</p></blockquote><h4 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h4><p>  大型DOM树可能以多种方式损害您的页面性能。</p><ul><li><p>网络效率和负载性能。如果您的服务器附带了一个大型DOM树，则可能会附带很多不必要的字节。这也可能会减慢页面加载时间，因为浏览器可能正在解析很多甚至不在首屏显示的节点。</p></li><li><p>运行时性能。当用户和脚本与您的页面交互时，浏览器必须不断重新计算节点的位置和样式。大型DOM树与复杂的样式规则结合使用会严重降低渲染速度。</p></li><li><p>内存性能。如果您使用诸如此类的通用查询选择器，<code>document.querySelectorAll(&#39;li&#39;)</code> 您可能会在不知不觉中存储对大量节点的引用，这可能会使用户设备的内存功能不堪重负。</p><h4 id="推荐建议"><a href="#推荐建议" class="headerlink" title="推荐建议"></a>推荐建议</h4><p>最佳DOM树：</p></li><li><p>总共少于1500个节点。</p></li><li><p>最大深度为32个节点。</p></li><li><p>没有父节点且子节点超过60个。</p><p>通常，寻找仅在需要时创建DOM节点并在不再需要时销毁它们的方法。</p><p>如果您的服务器附带了一个大型DOM树，请尝试加载页面并手动注意显示的节点。也许您可以从加载的文档中删除未显示的节点，然后仅在用户手势（例如滚动或单击按钮）之后创建它们。</p><p>如果在运行时创建DOM节点，则子<a href="https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints?hl=zh_cn#dom" target="_blank" rel="noopener">树修改DOM更改断点</a> 可以帮助您查明何时创建节点。</p><p>如果您无法避免大型DOM树，那么另一种提高渲染性能的方法就是简化CSS选择器。请参见<a href="https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations?hl=zh_cn" target="_blank" rel="noopener">减小样式计算的范围和复杂性</a>。</p></li></ul></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;优化建议&quot;&gt;&lt;a href=&quot;#优化建议&quot; class=&quot;headerlink&quot; title=&quot;优化建议&quot;&gt;&lt;/a&gt;优化建议&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;h3 id=&quot;document&quot;&gt;&lt;a href=&quot;#document&quot; class=&quot;headerlink&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="Frontends" scheme="https://www.bluesleeword.ml/categories/Frontends/"/>
+    
+    
+      <category term="前端" scheme="https://www.bluesleeword.ml/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title>前端优化干货链</title>

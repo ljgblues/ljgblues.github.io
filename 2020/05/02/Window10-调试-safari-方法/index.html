@@ -50,18 +50,18 @@
   };
 </script>
 
-  <meta name="description" content="汇总一些关于前端页面性能优化的帖子  性能预算（Performance budgets）【里面有推荐建议针对优化的各方面】https:&#x2F;&#x2F;developers.google.com&#x2F;web&#x2F;tools&#x2F;lighthouse&#x2F;audits&#x2F;budgets?utm_source=lighthouse&amp;amp;utm_medium=unknown&amp;amp;hl=zh_cn     优化图片Optimiz">
-<meta name="keywords" content="前端 优化">
+  <meta name="description" content="说明：在移动端页面开发中，需要处理 Android 和 iOS 的兼容性问题。在 Chrome DevTools 中选择手机模式，可以一定程度上模拟移动端的页面，但更多的只是方便进行页面布局的调试和兼容。一些移动端的特性与表现，在真机和模拟情况下还是有存在很大差别的（比如软键盘的弹出等），尤其是 iOS 出于某些“考虑”表现出不符合标准的 BUG，在 Windows Chrome 中更是难以定位">
+<meta name="keywords" content="前端调试页面技巧">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端优化干货链">
-<meta property="og:url" content="https:&#x2F;&#x2F;www.bluesleeword.ml&#x2F;2020&#x2F;01&#x2F;28&#x2F;%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E5%B9%B2%E8%B4%A7%E9%93%BE&#x2F;index.html">
+<meta property="og:title" content="Window10 调试 safari 方法">
+<meta property="og:url" content="https:&#x2F;&#x2F;www.bluesleeword.ml&#x2F;2020&#x2F;05&#x2F;02&#x2F;Window10-%E8%B0%83%E8%AF%95-safari-%E6%96%B9%E6%B3%95&#x2F;index.html">
 <meta property="og:site_name" content="Blueslee 小站">
-<meta property="og:description" content="汇总一些关于前端页面性能优化的帖子  性能预算（Performance budgets）【里面有推荐建议针对优化的各方面】https:&#x2F;&#x2F;developers.google.com&#x2F;web&#x2F;tools&#x2F;lighthouse&#x2F;audits&#x2F;budgets?utm_source=lighthouse&amp;amp;utm_medium=unknown&amp;amp;hl=zh_cn     优化图片Optimiz">
+<meta property="og:description" content="说明：在移动端页面开发中，需要处理 Android 和 iOS 的兼容性问题。在 Chrome DevTools 中选择手机模式，可以一定程度上模拟移动端的页面，但更多的只是方便进行页面布局的调试和兼容。一些移动端的特性与表现，在真机和模拟情况下还是有存在很大差别的（比如软键盘的弹出等），尤其是 iOS 出于某些“考虑”表现出不符合标准的 BUG，在 Windows Chrome 中更是难以定位">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-28T06:00:26.012Z">
+<meta property="og:updated_time" content="2020-05-01T15:52:48.350Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E5%B9%B2%E8%B4%A7%E9%93%BE/">
+<link rel="canonical" href="https://www.bluesleeword.ml/2020/05/02/Window10-%E8%B0%83%E8%AF%95-safari-%E6%96%B9%E6%B3%95/">
 
 
 <script id="page-configurations">
@@ -75,7 +75,7 @@
   };
 </script>
 
-  <title>前端优化干货链 | Blueslee 小站</title>
+  <title>Window10 调试 safari 方法 | Blueslee 小站</title>
   
 
 
@@ -214,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.bluesleeword.ml/2020/01/28/%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E5%B9%B2%E8%B4%A7%E9%93%BE/">
+    <link itemprop="mainEntityOfPage" href="https://www.bluesleeword.ml/2020/05/02/Window10-%E8%B0%83%E8%AF%95-safari-%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/pandas.jpg">
@@ -227,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          前端优化干货链
+          Window10 调试 safari 方法
         </h1>
 
         <div class="post-meta">
@@ -238,7 +238,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-01-28 14:36:03 / 修改时间：15:00:26" itemprop="dateCreated datePublished" datetime="2020-01-28T14:36:03+09:00">2020-01-28</time>
+              <time title="创建时间：2020-05-02 00:50:07 / 修改时间：00:52:48" itemprop="dateCreated datePublished" datetime="2020-05-02T00:50:07+09:00">2020-05-02</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,8 +246,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Frontends/" itemprop="url" rel="index">
-                    <span itemprop="name">Frontends</span>
+                  <a href="/categories/Development-skills/" itemprop="url" rel="index">
+                    <span itemprop="name">Development skills</span>
                   </a>
                 </span>
             </span>
@@ -270,36 +270,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="汇总一些关于前端页面性能优化的帖子"><a href="#汇总一些关于前端页面性能优化的帖子" class="headerlink" title="汇总一些关于前端页面性能优化的帖子"></a>汇总一些关于前端页面性能优化的帖子</h1><blockquote>
-<ol>
-<li>性能预算（Performance budgets）【里面有推荐建议针对优化的各方面】<br><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/budgets?utm_source=lighthouse&amp;utm_medium=unknown&amp;hl=zh_cn</a></em></strong></li>
-</ol>
+        <blockquote>
+<p>说明：在移动端页面开发中，需要处理 Android 和 iOS 的兼容性问题。在 Chrome DevTools 中选择手机模式，可以一定程度上模拟移动端的页面，但更多的只是方便进行页面布局的调试和兼容。一些移动端的特性与表现，在真机和模拟情况下还是有存在很大差别的（比如软键盘的弹出等），尤其是 iOS 出于某些“考虑”表现出不符合标准的 BUG，在 Windows Chrome 中更是难以定位。</p>
 </blockquote>
-<blockquote>
-<ol start="2">
-<li>优化图片Optimize Images<br><strong><em><a href="https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn" target="_blank" rel="noopener">https://developers.google.com/web/tools/lighthouse/audits/optimize-images?hl=zh_cn</a></em></strong></li>
+<p>本文介绍如何在 Windows 系统中连接 iPhone Web 页面进行真机调试。</p>
+<p>💡 参考视频：<a href="https://www.youtube.com/watch?v=A9vA_R3w6eE" target="_blank" rel="noopener">视频</a></p>
+<h3 id="工具资料"><a href="#工具资料" class="headerlink" title="工具资料"></a>工具资料</h3><ol>
+<li>iPhone/iPad + 数据线</li>
+<li>iTunes</li>
+<li>Node.js 环境</li>
+<li>remotedebug-ios-webkit-adapter</li>
+<li>Chrome 浏览器（勿使用过低版本 Chrome）</li>
+<li>梯子（可能需要）</li>
 </ol>
-</blockquote>
-<blockquote>
-<ol start="3">
-<li>资源优先级 – 让浏览器助您一臂之力<br><strong><em><a href="https://developers.google.com/web/fundamentals/performance/resource-prioritization" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/resource-prioritization</a></em></strong></li>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>实现真机调试主要是使用了 remotedebug-ios-webkit-adapter 这一工具，使用方法在其 <a href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter" target="_blank" rel="noopener">gitHub 主页</a> 上有介绍，可以直接按照其官方说明安装使用。本文对其 Windows 下的安装使用进行了一些细节的补充和说明。</p>
+<h3 id="安装-scoope"><a href="#安装-scoope" class="headerlink" title="安装 scoope"></a>安装 scoope</h3><p><a href="https://scoop.sh/?target=_blank">scoope</a> 是一个 Windows 命令行安装工具，类似 linux 下的 yum 或 <code>apt-get</code>。<code>remotedebug-ios-webkit-adapter</code> 的安装将使用该工具。</p>
+<p>使用 <a href="https://docs.microsoft.com/zh-cn/powershell/" target="_blank" rel="noopener">powershell</a>（powershell 是 Windows 预装的 Shell 工具）依次执行一下命令， 安装 scoope:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 使用Powershell进行安装</span><br><span class="line">iex (new-object net.webclient).downloadstring(&apos;https://get.scoop.sh&apos;)</span><br><span class="line"># 如果安装失败，请执行以下命令再重新安装</span><br><span class="line">Set-ExecutionPolicy RemoteSigned -scope CurrentUser</span><br></pre></td></tr></table></figure>
+
+<p>稍等片刻就安装成功了。如果安装失败，请尝试使用管理员权限执行。</p>
+<h3 id="安装-ios-webkit-debug-proxy"><a href="#安装-ios-webkit-debug-proxy" class="headerlink" title="安装 ios-webkit-debug-proxy"></a>安装 ios-webkit-debug-proxy</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">scoop bucket add extras</span><br><span class="line">scoop install ios-webkit-debug-proxy</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-remotedebug-ios-webkit-adapter"><a href="#安装-remotedebug-ios-webkit-adapter" class="headerlink" title="安装 remotedebug-ios-webkit-adapter"></a>安装 remotedebug-ios-webkit-adapter</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">npm install remotedebug-ios-webkit-adapter -g</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后，你将能在命令行中使用 <code>remotedebug_ios_webkit_adapter</code> 命令</p>
+<h3 id="安装-iTunes"><a href="#安装-iTunes" class="headerlink" title="安装 iTunes"></a>安装 iTunes</h3><p><a href="https://www.apple.com/itunes/download/" target="_blank" rel="noopener">访问 iTunes 官网</a>，下载 iTunes。这里注意 iTunes for Windows 提供两个版本，一个是从 Windows Store 下载，另一个是安装包。选择后者下载安装。</p>
+<h3 id="连接调试"><a href="#连接调试" class="headerlink" title="连接调试"></a>连接调试</h3><ol>
+<li>进入 iPhonse 中的 _设置 &gt; Safari 浏览器 &gt; 高级 &gt; Web 检查器_，开启该选项。</li>
+<li>打开 iTunes 并连接 iPhone，在 iPhone 弹框中选择信任该电脑。</li>
+<li>打开命令行，执行以下命令，启动适配器：</li>
 </ol>
-</blockquote>
-<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在Powershell中执行</span><br><span class="line">remotedebug_ios_webkit_adapter --port=9000</span><br></pre></td></tr></table></figure>
+
 <ol start="4">
-<li>IntersectionObserver 延迟加载图像和其他媒体<br><strong><em><a href="https://developers.google.com/web/updates/2016/04/intersectionobserver" target="_blank" rel="noopener">https://developers.google.com/web/updates/2016/04/intersectionobserver</a></em></strong></li>
+<li>在 iPhone 中打开 Safari 浏览器，打开待调试页面。</li>
+<li>打开 Chrome 浏览器，进入 <strong>chrome://inspect/#devices</strong> 页面，在 <code>Discover network targets</code> 选项添加 <code>localhost:9000</code> 配置。刷新页面，这时页面中会出现 <code>Remote Target</code> 列表，该列表展示了 iPhone 中打开的页面，点击 <code>inspect</code>，即可进行调试。</li>
 </ol>
-</blockquote>
-<blockquote>
-<ol start="5">
-<li>loadCSS<br><strong><em><a href="https://github.com/filamentgroup/loadCSS" target="_blank" rel="noopener">https://github.com/filamentgroup/loadCSS</a></em></strong></li>
+<p><strong>注意</strong>：如果第 5 步中未出现待调试页面，请重启 remotedebug_ios_webkit_adapter 工具，然后刷新或重启浏览器重试。</p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ol>
+<li>在首次点击 inspect 打开真机调试工具时可能需要科学上网，否则可能出现 404 错误。</li>
+<li>命令行执行失败时，请尝试使用管理员权限，或查看其官网说明。</li>
+<li>请勿使用较低版本的 Chrome 浏览器</li>
+<li>该例中使用了 Windows 10、Chrome 73.0.3683.75、iOS 12.1.4。</li>
+<li>其他系统下的安装和使用请查看 <a href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter" target="_blank" rel="noopener">remotedebug-ios-webkit-adapter gitHub 主页</a>。</li>
 </ol>
-</blockquote>
-<blockquote>
-<ol start="6">
-<li>阻塞渲染的 CSS<br><strong><em><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css" target="_blank" rel="noopener">https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css</a></em></strong></li>
-</ol>
-</blockquote>
 
     </div>
 
@@ -309,7 +323,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%89%8D%E7%AB%AF-%E4%BC%98%E5%8C%96/" rel="tag"># 前端 优化</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E8%B0%83%E8%AF%95%E9%A1%B5%E9%9D%A2%E6%8A%80%E5%B7%A7/" rel="tag"># 前端调试页面技巧</a>
           </div>
 
         
@@ -318,13 +332,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/11/13/Makedown-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" rel="prev" title="Makedown 快速上手">
-      <i class="fa fa-chevron-left"></i> Makedown 快速上手
+    <a href="/2020/01/28/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A8%E8%8D%90/" rel="prev" title="前端性能优化推荐">
+      <i class="fa fa-chevron-left"></i> 前端性能优化推荐
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/01/28/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8E%A8%E8%8D%90/" rel="next" title="前端性能优化推荐">
-      前端性能优化推荐 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -362,7 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#汇总一些关于前端页面性能优化的帖子"><span class="nav-number">1.</span> <span class="nav-text">汇总一些关于前端页面性能优化的帖子</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工具资料"><span class="nav-number">1.</span> <span class="nav-text">工具资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-scoope"><span class="nav-number">3.</span> <span class="nav-text">安装 scoope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-ios-webkit-debug-proxy"><span class="nav-number">4.</span> <span class="nav-text">安装 ios-webkit-debug-proxy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-remotedebug-ios-webkit-adapter"><span class="nav-number">5.</span> <span class="nav-text">安装 remotedebug-ios-webkit-adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-iTunes"><span class="nav-number">6.</span> <span class="nav-text">安装 iTunes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接调试"><span class="nav-number">7.</span> <span class="nav-text">连接调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">8.</span> <span class="nav-text">说明</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
