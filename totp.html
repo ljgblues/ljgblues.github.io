@@ -4,39 +4,116 @@
     <meta charset="UTF-8">
     <title> TOTP 生成器 </title>
     <style>
-        body { font-family: sans-serif; max-width: 540px; margin: 100px auto; padding: 20px; background: #f4f4f9; }
-        .card { background: white; padding: 26px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
-        label { display: block; text-align: left; font-weight: bold; margin-top: 32px; color: #333; }
-        input { width: 100%; padding: 10px; margin: 20px 0 30px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 18px; }
-        .code { font-size: 38px; font-weight: bold; color: #2575fc; letter-spacing: 5px; margin: 15px 0; min-height: 44px; }
-        .timer { color: #666; font-size: 16px; margin-bottom: 32px; }
-        .btn-copy { background-color: #2575fc; color: white; border: none; padding: 10px 20px; font-size: 18px; border-radius: 4px; cursor: pointer; width: 60%; transition: background 0.2s; }
-        .btn-copy:hover { background-color: #1a5fd6; }
-        .btn-copy:active { background-color: #1149ab; }
-        .toast { color: #28a745; font-size: 15px; margin-top: 8px; height: 24px; font-weight: bold; }
+        /* 1. body 负责全屏并铺满背景，同时改为垂直列布局 */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            min-height: 100vh; 
+            
+            /* 设置全屏背景图 */
+            /*background-image: url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;*/
+            
+            /* 弹性盒子垂直排列：上方是内容，下方是页脚 */
+            display: flex;             
+            flex-direction: column;
+            align-items: center;        
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* 2. 主体卡片容器，通过 flex-grow 将页脚顶到最下面 */
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        /* 验证码卡片（毛玻璃特效） */
+        .card { 
+            width: 90%;
+            max-width: 540px; 
+            padding: 20px; 
+            border-radius: 16px; 
+            box-sizing: border-box;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.75); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        h2 { margin-top: 0; color: #1e293b; font-size: 26px; margin-bottom: 20px; }
+        label { display: block; text-align: left; font-weight: 600; margin-top: 32px; color: #475569; font-size: 16px; }
+        
+        input { 
+            width: 100%; padding: 12px; margin: 20px 0 20px 0; box-sizing: border-box; 
+            border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 18px; 
+            background: rgba(255,255,255,0.8); transition: all 0.2s;
+        }
+
+        input:focus { outline: none; border-color: #2575fc; box-shadow: 0 0 0 3px rgba(37,117,252,0.2); }
+
+        .code { font-size: 40px; font-weight: 600; color: #2575fc; letter-spacing: 6px; margin: 20px 0; min-height: 48px; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .timer { color: #64748b; font-size: 15px; margin-bottom: 30px; font-weight: 500; }
+        
+        .btn-copy { 
+            background: linear-gradient(135deg, #2575fc 0%, #1a5fd6 100%); color: white; border: none; 
+            padding: 12px 20px; font-size: 16px; border-radius: 8px; 
+            cursor: pointer; width: 50%; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(37,117,252,0.3);
+        }
+        .btn-copy:hover { opacity: 0.9; }
+        .btn-copy:active { opacity: 0.8; }
+        .toast { color: #059669; font-size: 14px; margin-top: 14px; height: 18px; font-weight: 600; }
+
+        /* 3. 新增：底部页脚（浅灰色半透明背景，文字居中） */
+        footer {
+            width: 100%;
+            background-color: rgba(243, 244, 246, 0.85); /* 浅灰色背景且带有一点透明度配合大背景 */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(229, 231, 235, 0.5);
+            padding: 16px 0;
+            text-align: center;
+            color: #4b5563; /* 优雅的深灰色文字 */
+            font-size: 16px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2 style="margin-top: 0; color: #333;">本地原生 TOTP 生成器</h2>
-    <label for="secret">请输入密钥 (Base32 格式):</label>
-    <input type="text" id="secret" placeholder="例如: JBSWY3DPEHPK3PXP" oninput="updateTOTP()">
-    
-    <div class="code" id="code">------</div>
-    <div class="timer" id="timer">剩余时间: -- 秒</div>
-    
-    <button class="btn-copy" onclick="copyCode()">复制验证码</button>
-    <div class="toast" id="toast"></div>
+<!-- 主体包裹容器 -->
+<div class="container">
+    <div class="card">
+        <h2>本地无网 TOTP 生成器</h2>
+        <label for="secret">请输入密钥 (Base32 格式):</label>
+        <input type="text" id="secret" placeholder="例如: JBSWY3DPEHPK3PXP" oninput="updateTOTP()" autofocus>
+        
+        <div class="code" id="code">------</div>
+        <div class="timer" id="timer">剩余时间: -- 秒</div>
+        
+        <button class="btn-copy" onclick="copyCode()">复制验证码</button>
+        <div class="toast" id="toast"></div>
+    </div>
 </div>
 
+<!-- 底部页脚 -->
+<footer>
+    Built by <i>Blues Lee</i>. Source on <a href="https://github.com/">Github.</a>
+</footer>
+
 <script>
-    // 1. 纯 JS 实现 Base32 解码
     function base32ToBytes(base32) {
         const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
         let cleaned = base32.replace(/=+\$/, '').toUpperCase().replace(/[^A-Z2-7]/g, '');
-        let bits = '';
-        let bytes = [];
+        let bits = ''; let bytes = [];
         for (let i = 0; i < cleaned.length; i++) {
             let val = alphabet.indexOf(cleaned[i]);
             if (val === -1) continue;
@@ -48,37 +125,26 @@
         return new Uint8Array(bytes);
     }
 
-    // 2. 利用浏览器自带的 Web Crypto API 计算 TOTP
     async function getTOTP(secretBase32) {
         try {
             const keyBytes = base32ToBytes(secretBase32);
             if (keyBytes.length === 0) return "------";
-
-            const epoch = Math.floor(Date.now() / 1000);
-            const counter = Math.floor(epoch / 30); // 30秒步长
-            
+            const counter = Math.floor(Math.floor(Date.now() / 1000) / 30);
             const buffer = new ArrayBuffer(8);
             const view = new DataView(buffer);
             view.setUint32(4, counter, false); 
-
-            // 直接调用浏览器内核的 HMAC-SHA1 算法
             const cryptoKey = await window.crypto.subtle.importKey(
                 "raw", keyBytes, { name: "HMAC", hash: "SHA-1" }, false, ["sign"]
             );
-
             const signature = await window.crypto.subtle.sign("HMAC", cryptoKey, buffer);
             const hmac = new Uint8Array(signature);
-            
             const offset = hmac[hmac.length - 1] & 0x0f;
             const code = ((hmac[offset] & 0x7f) << 24 |
                          (hmac[offset + 1] & 0xff) << 16 |
                          (hmac[offset + 2] & 0xff) << 8 |
                          (hmac[offset + 3] & 0xff)) % 1000000;
-
             return code.toString().padStart(6, '0');
-        } catch (e) {
-            return "------";
-        }
+        } catch (e) { return "------"; }
     }
 
     async function updateTOTP() {
@@ -88,31 +154,22 @@
         codeElem.innerText = await getTOTP(secret);
     }
 
-    // 3. 一键复制功能
     function copyCode() {
         const codeText = document.getElementById('code').innerText;
         const toastElem = document.getElementById('toast');
-        
         if (codeText === '------') {
-            toastElem.style.color = '#dc3545';
-            toastElem.innerText = '请先输入有效的密钥';
-            setTimeout(() => toastElem.innerText = '', 2000);
-            return;
+            toastElem.style.color = '#dc2626'; toastElem.innerText = '请先输入有效的密钥';
+            setTimeout(() => toastElem.innerText = '', 2000); return;
         }
-
-        // 使用现代浏览器原生的剪贴板 API
         navigator.clipboard.writeText(codeText).then(() => {
-            toastElem.style.color = '#28a745';
-            toastElem.innerText = '复制成功！';
+            toastElem.style.color = '#059669'; toastElem.innerText = '复制成功！';
             setTimeout(() => toastElem.innerText = '', 2000);
-        }).catch(err => {
-            toastElem.style.color = '#dc3545';
-            toastElem.innerText = '复制失败，请手动复制';
+        }).catch(() => {
+            toastElem.style.color = '#dc2626'; toastElem.innerText = '复制失败，请手动复制';
             setTimeout(() => toastElem.innerText = '', 2000);
         });
     }
 
-    // 4. 倒计时定时器
     setInterval(() => {
         const remaining = 30 - (Math.floor(Date.now() / 1000) % 30);
         document.getElementById('timer').innerText = `剩余时间: ${remaining} 秒`;
