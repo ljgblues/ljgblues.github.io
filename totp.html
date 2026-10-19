@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>单文件离线 TOTP 生成器（带复制功能）</title>
+    <style>
+        body { font-family: sans-serif; max-width: 540px; margin: 100px auto; padding: 20px; background: #f4f4f9; }
+        .card { background: white; padding: 26px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        label { display: block; text-align: left; font-weight: bold; margin-top: 32px; color: #333; }
+        input { width: 100%; padding: 10px; margin: 20px 0 30px 0; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 18px; }
+        .code { font-size: 38px; font-weight: bold; color: #2575fc; letter-spacing: 5px; margin: 15px 0; min-height: 44px; }
+        .timer { color: #666; font-size: 16px; margin-bottom: 32px; }
+        .btn-copy { background-color: #2575fc; color: white; border: none; padding: 10px 20px; font-size: 18px; border-radius: 4px; cursor: pointer; width: 60%; transition: background 0.2s; }
+        .btn-copy:hover { background-color: #1a5fd6; }
+        .btn-copy:active { background-color: #1149ab; }
+        .toast { color: #28a745; font-size: 15px; margin-top: 8px; height: 24px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2 style="margin-top: 0; color: #333;">本地原生 TOTP 生成器</h2>
+    <label for="secret">请输入密钥 (Base32 格式):</label>
+    <input type="text" id="secret" placeholder="例如: JBSWY3DPEHPK3PXP" oninput="updateTOTP()">
+    
+    <div class="code" id="code">------</div>
+    <div class="timer" id="timer">剩余时间: -- 秒</div>
+    
+    <button class="btn-copy" onclick="copyCode()">复制验证码</button>
+    <div class="toast" id="toast"></div>
+</div>
+
+<script>
+    // 1. 纯 JS 实现 Base32 解码
+    function base32ToBytes(base32) {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+        let cleaned = base32.replace(/=+\$/, '').toUpperCase().replace(/[^A-Z2-7]/g, '');
+        let bits = '';
+        let bytes = [];
+        for (let i = 0; i < cleaned.length; i++) {
+            let val = alphabet.indexOf(cleaned[i]);
+            if (val === -1) continue;
+            bits += val.toString(2).padStart(5, '0');
+        }
+        for (let i = 0; i + 8 <= bits.length; i += 8) {
+            bytes.push(parseInt(bits.substr(i, 8), 2));
+        }
+        return new Uint8Array(bytes);
+    }
+
+    // 2. 利用浏览器自带的 Web Crypto API 计算 TOTP
+    async function getTOTP(secretBase32) {
+        try {
+            const keyBytes = base32ToBytes(secretBase32);
+            if (keyBytes.length === 0) return "------";
+
+            const epoch = Math.floor(Date.now() / 1000);
+            const counter = Math.floor(epoch / 30); // 30秒步长
+            
+            const buffer = new ArrayBuffer(8);
+            const view = new DataView(buffer);
+            view.setUint32(4, counter, false); 
+
+            // 直接调用浏览器内核的 HMAC-SHA1 算法
+            const cryptoKey = await window.crypto.subtle.importKey(
+                "raw", keyBytes, { name: "HMAC", hash: "SHA-1" }, false, ["sign"]
+            );
+
+            const signature = await window.crypto.subtle.sign("HMAC", cryptoKey, buffer);
+            const hmac = new Uint8Array(signature);
+            
+            const offset = hmac[hmac.length - 1] & 0x0f;
+            const code = ((hmac[offset] & 0x7f) << 24 |
+                         (hmac[offset + 1] & 0xff) << 16 |
+                         (hmac[offset + 2] & 0xff) << 8 |
+                         (hmac[offset + 3] & 0xff)) % 1000000;
+
+            return code.toString().padStart(6, '0');
+        } catch (e) {
+            return "------";
+        }
+    }
+
+    async function updateTOTP() {
+        const secret = document.getElementById('secret').value.trim();
+        const codeElem = document.getElementById('code');
+        if (!secret) { codeElem.innerText = '------'; return; }
+        codeElem.innerText = await getTOTP(secret);
+    }
+
+    // 3. 一键复制功能
+    function copyCode() {
+        const codeText = document.getElementById('code').innerText;
+        const toastElem = document.getElementById('toast');
+        
+        if (codeText === '------') {
+            toastElem.style.color = '#dc3545';
+            toastElem.innerText = '请先输入有效的密钥';
+            setTimeout(() => toastElem.innerText = '', 2000);
+            return;
+        }
+
+        // 使用现代浏览器原生的剪贴板 API
+        navigator.clipboard.writeText(codeText).then(() => {
+            toastElem.style.color = '#28a745';
+            toastElem.innerText = '复制成功！';
+            setTimeout(() => toastElem.innerText = '', 2000);
+        }).catch(err => {
+            toastElem.style.color = '#dc3545';
+            toastElem.innerText = '复制失败，请手动复制';
+            setTimeout(() => toastElem.innerText = '', 2000);
+        });
+    }
+
+    // 4. 倒计时定时器
+    setInterval(() => {
+        const remaining = 30 - (Math.floor(Date.now() / 1000) % 30);
+        document.getElementById('timer').innerText = `剩余时间: ${remaining} 秒`;
+        if (remaining === 30 || document.getElementById('code').innerText === '------') {
+            updateTOTP();
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
