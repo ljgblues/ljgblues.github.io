@@ -6,89 +6,53 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/images/totp-32x32.png">
     <link rel="icon" type="image/x-icon" href="/images/totp_favicon.ico">
     <style>
-        /* 1. body 负责全屏并铺满背景，同时改为垂直列布局 */
         body { 
-            margin: 0; 
-            padding: 0; 
-            min-height: 100vh; 
-            
+            margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; background: rgba(235, 235, 235, 0.65);      
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             /* 设置全屏背景图 */
             /*background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;*/
-            
-            /* 弹性盒子垂直排列：上方是内容，下方是页脚 */
-            display: flex;             
-            flex-direction: column;
-            align-items: center; 
-            background: rgba(235, 235, 235, 0.65);      
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         /* 2. 主体卡片容器，通过 flex-grow 将页脚顶到最下面 */
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px 0;
-        }
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px 0; }
 
         /* 验证码卡片（毛玻璃特效） */
-        .card { 
-            width: 90%;
-            max-width: 540px; 
-            padding: 20px; 
-            border-radius: 16px; 
-            box-sizing: border-box;
-            text-align: center;
-            background: rgba(255, 255, 255, 1); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        h2 { margin-top: 20px; color: #1e293b; font-size: 26px; margin-bottom: 20px; }
-        label { display: block; text-align: left; font-weight: 600; margin-top: 32px; color: #475569; font-size: 16px; }
-        
-        input { 
-            width: 100%; padding: 12px; margin: 20px 0 20px 0; box-sizing: border-box; 
-            border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 15px; 
-            background: rgba(255,255,255,0.8); transition: all 0.2s;
-            height:46px; color:#363636;
-        }
-
+        .card { width: 90%; max-width: 540px; padding: 20px; border-radius: 16px; box-sizing: border-box; text-align: center; background: rgba(255, 255, 255, 1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); }
+        h2 { margin-top: 20px; color: #1e293b; font-size: 26px; }
+        label { display: block; text-align: left; font-weight: 600; margin-top: 24px; color: #475569; font-size: 16px; }
+        input { width: 100%; padding: 12px; margin: 20px 0; box-sizing: border-box; border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-size: 16px; background: rgba(255,255,255,0.8); transition: all 0.2s; height:46px; color:#363636; }
         input:focus { outline: none; border-color: #2575fc; box-shadow: 0 0 0 3px rgba(37,117,252,0.2); }
-
-        .code { font-size: 40px; font-weight: 600; color: #2575fc; letter-spacing: 6px; margin: 20px 0; min-height: 48px; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .timer { color: #64748b; font-size: 15px; margin-bottom: 30px; font-weight: 500; }
+        input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none;  height: 16px; width: 16px; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%23838d9d"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/></svg>') no-repeat center; cursor: pointer;}
+        .code { font-size: 42px; font-weight: 600; color: #2575fc; letter-spacing: 8px; margin-bottom: 20px; min-height: 48px; text-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         
-        .btn-copy { 
-            background: linear-gradient(135deg, #2575fc 0%, #1a5fd6 100%); color: white; border: none; 
-            padding: 12px 20px; font-size: 16px; border-radius: 8px; 
-            cursor: pointer; width: 50%; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(37,117,252,0.3);
-        }
+        /* === 新增/修改：环形进度条样式容器 === */
+        .timer-container { position: relative; width: 80px; height: 80px; margin: 0 auto 20px auto; }
+
+        /* 顺时针旋转，让进度条从正上方12点钟方向开始 */
+        .timer-container svg { transform: rotate(-90deg); width: 100%; height: 100%;}
+
+        /* 环形底色轨道 */
+        .circle-bg { fill: none; stroke: #e2e8f0; stroke-width: 6; }
+
+        /* 动态进度条 */
+        .circle-progress { fill: none; stroke: #10b981; stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.3s ease; }
+        .timer-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #475569; font-size: 18px; font-weight: 600; transition: color 0.3s ease; }
+
+        /* 当处于危险倒计时（小于10秒）时变红色 */
+        .timer-container.is-danger .circle-progress { stroke: #ef4444; }
+        .timer-container.is-danger .timer-text { color: #ef4444; }
+        
+        .btn-copy { background: linear-gradient(135deg, #2575fc 0%, #1a5fd6 100%); color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 50%; transition: opacity 0.2s; box-shadow: 0 4px 12px rgba(37,117,252,0.3); }
         .btn-copy:hover { opacity: 0.9; }
         .btn-copy:active { opacity: 0.8; }
         .toast { color: #059669; font-size: 14px; margin-top: 14px; height: 18px; font-weight: 600; }
 
-        /* 3. 新增：底部页脚（浅灰色半透明背景，文字居中） */
-        footer {
-            width: 100%;
-            background-color: rgba(234, 240, 254, 0.85); /* 浅灰色背景且带有一点透明度配合大背景 */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border-top: 1px solid rgba(229, 231, 235, 1);
-            padding: 16px 0;
-            text-align: center;
-            color: #4b5563; /* 优雅的深灰色文字 */
-            font-size: 16px;
-            font-weight: 500;
-        }
+        /*底部页脚 */
+        footer { width: 100%; background-color: rgba(234, 240, 254, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border-top: 1px solid rgba(229, 231, 235, 1); padding: 16px 0; text-align: center; color: #4b5563; font-size: 16px; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -96,12 +60,21 @@
 <!-- 主体包裹容器 -->
 <div class="container">
     <div class="card">
-        <h2>本地无网 TOTP 生成器</h2>
+        <h2>本地 TOTP 生成器</h2>
         <label for="secret">请输入密钥 (Base32 格式):</label>
-        <input type="text" id="secret" placeholder="例如: JBSWY3DPEHPK3PXP" oninput="updateTOTP()" autofocus>
+        <input type="search" id="secret" placeholder="例如: JBSWY3DPEHPK3PXP" oninput="updateTOTP()" autofocus>
         
         <div class="code" id="code">------</div>
-        <div class="timer" id="timer">剩余时间: -- 秒</div>
+        
+        <!-- 环形进度条组件 -->
+        <div class="timer-container">
+            <svg viewBox="0 0 80 80">
+                <circle class="circle-bg" cx="40" cy="40" r="34"></circle>
+                <!-- r=34 的圆周长约为 2 * 3.14159 * 34 = 213.6 -->
+                <circle class="circle-progress" id="progress" cx="40" cy="40" r="34" stroke-dasharray="214" stroke-dashoffset="0"></circle>
+            </svg>
+            <div class="timer-text" id="timer-text">--s</div>
+        </div>
         
         <button class="btn-copy" onclick="copyCode()">复制验证码</button>
         <div class="toast" id="toast"></div>
@@ -174,13 +147,40 @@
         });
     }
 
-    setInterval(() => {
-        const remaining = 30 - (Math.floor(Date.now() / 1000) % 30);
-        document.getElementById('timer').innerText = `剩余时间: ${remaining} 秒`;
+    // === 修改：定时器逻辑，支持计算环形进度偏移量 ===
+    const maxPercent = 220; // 圆周长 (2 * PI * r)
+    
+    function refreshTimer() {
+        const nowInSeconds = Math.floor(Date.now() / 1000);
+        const remaining = 30 - (nowInSeconds % 30);
+        
+        const timerTextElem = document.getElementById('timer-text');
+        const progressElem = document.getElementById('progress');
+        const timerContainer = document.querySelector('.timer-container');
+        
+        // 1. 更新中间的文本秒数
+        timerTextElem.innerText = `${remaining}s`;
+        
+        // 2. 根据剩余时间动态变换颜色
+        if (remaining <= 10) {
+            timerContainer.classList.add('is-danger');
+        } else {
+            timerContainer.classList.remove('is-danger');
+        }
+        
+        // 3. 计算并更新圆环进度条位置
+        const offset = maxPercent - (remaining / 30) * maxPercent;
+        progressElem.style.strokeDashoffset = offset;
+        
+        // 4. 跨周期或没有密码时触发更新
         if (remaining === 30 || document.getElementById('code').innerText === '------') {
             updateTOTP();
         }
-    }, 1000);
+    }
+
+    // 页面加载先执行一次防止留白，随后每秒执行
+    refreshTimer();
+    setInterval(refreshTimer, 1000);
 </script>
 
 </body>
